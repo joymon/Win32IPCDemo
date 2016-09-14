@@ -3,3 +3,6 @@
 ################################################################################
 
 /WinFormsChatClient/bin/Debug
+/WinFormsChatClient/obj/Debug
+/WPFChatClient/bin/Debug
+/WPFChatClient/obj/Debug
