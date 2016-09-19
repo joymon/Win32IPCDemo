@@ -6,3 +6,5 @@
 /WinFormsChatClient/obj/Debug
 /WPFChatClient/bin/Debug
 /WPFChatClient/obj/Debug
+/binaries
+*.suo

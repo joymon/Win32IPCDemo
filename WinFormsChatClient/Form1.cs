@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -21,10 +22,7 @@ namespace WinFormsChatClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Timer t = new Timer() ;
-            t.Interval = 1000;
-            t.Tick += Timer_Tick;
-            //t.Start();
+            
         }
         protected override void WndProc(ref Message m)
         {
@@ -49,7 +47,7 @@ namespace WinFormsChatClient
 
         private void WriteToMessages(string msg)
         {
-            MessagesTextBox.Text += Environment.NewLine + "WPF Says:" + msg;
+            MessagesTextBox.Text += Environment.NewLine + "WPF Says: " + msg;
         }
 
         int a=0;
@@ -71,6 +69,19 @@ namespace WinFormsChatClient
         private void DoWork1()
         {
             Console.WriteLine("Do Work");
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            Process wpf = Process.GetProcesses().FirstOrDefault((proc) => proc.ProcessName.Contains("WPFChatClient"));
+            if (wpf == null)
+            {
+                MessageBox.Show("WinFormsCharClient is not running");
+            }
+            else
+            {
+                new Win32Helper().SendStringViaCopyData(wpf.MainWindowHandle, MessageToSendTextBox.Text);
+            }
         }
     }
 }

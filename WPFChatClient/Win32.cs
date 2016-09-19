@@ -29,14 +29,16 @@ namespace ChatClient
     }
     class Win32Helper
     {
-        public void SendString(IntPtr handle,string message)
+        private const int MULTIPLICATION_FACTOR_UNICODE = 2;
+        private const int LENGTH_NULL_CHAR = 1;
+
+        public void SendStringViaCopyData(IntPtr handle,string message)
         {
-            string s = message;
-            IntPtr lpData = Marshal.StringToHGlobalUni(s);
+            IntPtr lpData = Marshal.StringToHGlobalUni(message);
 
             Win32.COPYDATASTRUCT data = new Win32.COPYDATASTRUCT();
             data.dwData = 0;
-            data.cbData = s.Length * 2;
+            data.cbData = message.Length * MULTIPLICATION_FACTOR_UNICODE + LENGTH_NULL_CHAR;
             data.lpData = lpData;
 
             IntPtr lpStruct = Marshal.AllocHGlobal(
